@@ -24,3 +24,7 @@ yarn-error.log
 ###> phpStorm ###
 *.idea
 ###< phpStorm ###
+
+###> docker ###
+/docker/
+###< docker ###
