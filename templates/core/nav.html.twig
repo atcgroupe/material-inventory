@@ -1,0 +1,69 @@
+<nav
+    class="
+        fixed top-0 left-0 w-full
+        bg-gradient-to-b from-white via-white to-transparent
+        sm:pt-5 pb-5
+    "
+>
+    <div class="mx-auto container max-w-screen-lg sm:px-5 xl:px-0">
+        <div
+            class="
+                flex justify-between items-center
+                px-5 py-3
+                bg-gray-100
+                sm:rounded-full
+                drop-shadow-md
+            "
+        >
+            {# Left side #}
+            <div class="flex items-center">
+                {# Brand #}
+                <div class="sm:pr-4 sm:mr-4 sm:border-r border-gray-400">
+                    <h1 class="text-2xl font-bold mt-1">ATC Groupe</h1>
+                    <h2 class="font-light -mt-2 mb-1">Material Inventory</h2>
+                </div>
+
+                {# Menu #}
+                <div class="flex items-center justify-between hidden sm:block">
+                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'Librairie' }) }}
+
+                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
+
+                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'resa' }) }}
+                </div>
+            </div>
+
+            {# Right side #}
+            <div class="flex items-center justify-end">
+                {# User #}
+                <div class="hidden sm:block p-2 rounded-full bg-cyan-400 text-white">
+                    {{ app.user.displayName('initials') }}
+                </div>
+
+                {# Button for mobile menu #}
+                <div class="sm:hidden">
+                    <i id="app_navbar_button" class="fas fa-bars text-3xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="app_navbar_mobile_menu"
+            class="
+                hidden
+                bg-gray-200
+                px-3 py-2
+                border-t border-gray-500
+                transition ease-in-out delay-700
+            "
+        >
+            <ul>
+                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'Librairie' }) }}
+
+                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
+
+                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'resa' }) }}
+            </ul>
+        </div>
+    </div>
+</nav>
