@@ -52,6 +52,8 @@ class MaterialRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->addSelect('formats')
                 ->leftJoin('m.formats', 'formats')
+                ->orderBy('formats.width', 'ASC')
+                ->addOrderBy('formats.height', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
     }
