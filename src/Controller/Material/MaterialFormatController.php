@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/material/{materialId}/format', name: 'material_format')]
+#[Route('/material', name: 'material_format')]
 class MaterialFormatController extends AbstractController
 {
     public function __construct(
@@ -21,7 +21,7 @@ class MaterialFormatController extends AbstractController
         private FormatRepository $formatRepository,
     ) {}
 
-    #[Route('/create', name: '_create')]
+    #[Route('/{materialId}/format/create', name: '_create')]
     public function create(int $materialId, Request $request): Response
     {
         $material = $this->materialRepository->find($materialId);
@@ -42,8 +42,8 @@ class MaterialFormatController extends AbstractController
         ]);
     }
 
-    #[Route('/update/{id}', name: '_update')]
-    public function update(int $materialId, int $id, Request $request): Response
+    #[Route('/format/update/{id}', name: '_update')]
+    public function update(int $id, Request $request): Response
     {
         $format = $this->formatRepository->findOneWithRelations($id);
         $form = $this->createForm(FormatEditType::class, $format);
@@ -52,13 +52,32 @@ class MaterialFormatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->doctrine->getManager()->flush();
 
-            return $this->redirectToRoute('material_view', ['id' => $materialId]);
+            return $this->redirectToRoute('material_view', ['id' => $format->getMaterial()->getId()]);
         }
 
         return $this->render('material/format_edit.html.twig', [
             'material' => $format->getMaterial(),
             'format' => $format,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/format/delete/{id}', name: '_delete')]
+    public function delete(int $id, Request $request): Response
+    {
+        $format = $this->formatRepository->findOneWithRelations($id);
+        $token = $request->request->get('_csrf_token');
+        $isTokenValid = $this->isCsrfTokenValid('delete_format', $token);
+
+        if ($request->isMethod('POST') && $isTokenValid) {
+            $this->doctrine->getManager()->remove($format);
+            $this->doctrine->getManager()->flush();
+
+            return $this->redirectToRoute('material_view', ['id' => $format->getMaterial()->getId()]);
+        }
+
+        return $this->render('material/format_delete.html.twig', [
+            'format' => $format,
         ]);
     }
 }
