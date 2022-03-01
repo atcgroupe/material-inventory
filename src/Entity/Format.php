@@ -32,6 +32,11 @@ class Format
     #[ORM\Column(type: 'smallint')]
     private $priority;
 
+    public function __construct(Material $material)
+    {
+        $this->setMaterial($material);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
