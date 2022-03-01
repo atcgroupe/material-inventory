@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\FormatPriority;
 use App\Repository\FormatRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -23,6 +24,13 @@ class Format
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank(message: 'La hauteur est obligatoire')]
     private $height;
+
+    #[ORM\ManyToOne(targetEntity: Material::class, inversedBy: 'formats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $material;
+
+    #[ORM\Column(type: 'smallint')]
+    private $priority;
 
     public function getId(): ?int
     {
@@ -50,11 +58,40 @@ class Format
     {
         $this->height = $height;
 
+        return $this;
+    }
+
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
     #[Assert\IsTrue(message: 'La hauteur doit être supérieure ou égale à la largeur')]
     public function isValid(): bool
     {
         return $this->getHeight() >= $this->getWidth();
     }
+
+    public function getPriority(): ?int
+    {
+        return $this->priority;
+    }
+
+    public function getPriorityLabel(): string
+    {
+        return FormatPriority::from($this->getPriority())->getLabel();
+    }
+
+    public function setPriority(int $priority): self
+    {
+        $this->priority = $priority;
 
         return $this;
     }
