@@ -6,8 +6,11 @@ use App\Repository\MaterialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MaterialRepository::class)]
+#[UniqueEntity('name', message: 'Cette matière est déjà enregistrée !', repositoryMethod: 'isUnique')]
 class Material
 {
     #[ORM\Id]
@@ -16,6 +19,7 @@ class Material
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de la matière est obligatoire')]
     private $name;
 
     #[ORM\Column(type: 'smallint')]
