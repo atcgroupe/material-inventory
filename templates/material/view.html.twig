@@ -87,7 +87,7 @@
                         <div class="sm:hidden text-sm rounded-full bg-{{ priorityColor }} py-0 px-2">&nbsp;</div>
 
                         {{ include('component/button/a_button.html.twig', {
-                            href: '#',
+                            href: path('material_format_update', { materialId: material.id, id: format.id }),
                             class: 'ml-2 sm:ml-5',
                             option: { icon: 'edit', type: 'info' },
                         }) }}
