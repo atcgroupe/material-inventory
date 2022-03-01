@@ -18,14 +18,17 @@
             {# Left side #}
             <div class="flex items-center">
                 {# Brand #}
-                <div class="sm:pr-4 sm:mr-4 sm:border-r border-gray-400">
+                <a href="{{ path('dashboard') }}" class="sm:pr-4 sm:mr-4 sm:border-r border-gray-400">
                     <h1 class="text-2xl font-bold mt-1">ATC Groupe</h1>
                     <h2 class="font-light -mt-2 mb-1">Material Inventory</h2>
-                </div>
+                </a>
 
                 {# Menu #}
                 <div class="flex items-center justify-between hidden sm:block">
-                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'Librairie' }) }}
+                    {{ include('component/nav/navbar_menu_item.html.twig', {
+                        href: path('material_index'),
+                        label: 'Librairie'
+                    }) }}
 
                     {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
 
@@ -54,11 +57,14 @@
                 bg-gray-200
                 px-3 py-2
                 border-t border-gray-500
-                transition ease-in-out delay-700
+                transition ease-in-out duration-300
             "
         >
             <ul>
-                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'Librairie' }) }}
+                {{ include('component/nav/navbar_mobile_menu_item.html.twig', {
+                    href: path('material_index'),
+                    label: 'Librairie'
+                }) }}
 
                 {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
 
