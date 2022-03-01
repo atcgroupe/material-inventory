@@ -1,0 +1,35 @@
+{% extends 'core/core.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ encore_entry_link_tags('material') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('material') }}
+{% endblock %}
+
+{% block main %}
+    <section class="grid grid-cols-1 lg:grid-cols-3">
+        <div></div>
+
+        <h1 class="text-3xl text-center">Librairie des matières</h1>
+
+        <p class="w-full flex justify-center lg:justify-end mt-4 lg:mt-0">
+            {{ include('component/button/a_button.html.twig', {
+                href: path('material_create'),
+                label: 'Ajouter',
+                option: { icon: 'plus', rounded: true }
+            }) }}
+        </p>
+    </section>
+
+    <section
+        id="material-list"
+        data-route="{{ path('material_list') }}"
+    >
+    </section>
+{% endblock %}
