@@ -19,32 +19,15 @@ class FormatRepository extends ServiceEntityRepository
         parent::__construct($registry, Format::class);
     }
 
-    // /**
-    //  * @return Format[] Returns an array of Format objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneWithRelations(int $id): ?Format
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Format
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('f.id = :id')
+                ->setParameter('id', $id)
+            ->addSelect('material')
+                ->leftJoin('f.material', 'material')
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
