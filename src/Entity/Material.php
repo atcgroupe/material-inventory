@@ -34,10 +34,15 @@ class Material
     #[ORM\OneToMany(mappedBy: 'material', targetEntity: Piece::class, orphanRemoval: true)]
     private $pieces;
 
+    #[ORM\OneToMany(mappedBy: 'material', targetEntity: Format::class, orphanRemoval: true)]
+    private $formats;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->pieces = new ArrayCollection();
+        $this->formats = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -132,6 +137,36 @@ class Material
             // set the owning side to null (unless already changed)
             if ($piece->getMaterial() === $this) {
                 $piece->setMaterial(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Format>
+     */
+    public function getFormats(): Collection
+    {
+        return $this->formats;
+    }
+
+    public function addFormat(Format $format): self
+    {
+        if (!$this->formats->contains($format)) {
+            $this->formats[] = $format;
+            $format->setMaterial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormat(Format $format): self
+    {
+        if ($this->formats->removeElement($format)) {
+            // set the owning side to null (unless already changed)
+            if ($format->getMaterial() === $this) {
+                $format->setMaterial(null);
             }
         }
 
