@@ -19,32 +19,40 @@ class MaterialRepository extends ServiceEntityRepository
         parent::__construct($registry, Material::class);
     }
 
-    // /**
-    //  * @return Material[] Returns an array of Material objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Material[] Returns an array of Material objects
+     */
+    public function findByName(string|null $search)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('m.name LIKE :val')
+                ->setParameter('val', '%' . strtolower($search) . '%')
+            ->andWhere('m.isActive = :isActive')
+                ->setParameter('isActive', true)
+            ->orderBy('m.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Material
+    public function isUnique(array $search)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('LOWER(m.name) = LOWER(:name)')
+            ->setParameter('name', $search['name'])
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    public function findWithRelations(int $id): ?Material
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.id = :id')
+            ->setParameter('id', $id)
+            ->addSelect('formats')
+                ->leftJoin('m.formats', 'formats')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
