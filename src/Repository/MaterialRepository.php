@@ -25,8 +25,8 @@ class MaterialRepository extends ServiceEntityRepository
     public function findByName(string|null $search)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.name LIKE :val')
-                ->setParameter('val', '%' . strtolower($search) . '%')
+            ->andWhere('LOWER(m.name) LIKE LOWER(:val)')
+                ->setParameter('val', '%' . $search . '%')
             ->andWhere('m.isActive = :isActive')
                 ->setParameter('isActive', true)
             ->orderBy('m.name', 'ASC')
