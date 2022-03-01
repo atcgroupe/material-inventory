@@ -23,9 +23,7 @@ class MaterialController extends AbstractController
     #[Route('/', name: '_index')]
     public function index(): Response
     {
-        return $this->render('material/index.html.twig', [
-            'materials' => $this->materialRepository->findBy(['isActive' => true]),
-        ]);
+        return $this->render('material/index.html.twig');
     }
 
     #[Route('/list', name: '_list')]
