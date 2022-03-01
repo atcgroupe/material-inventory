@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: ["./templates/**/*.html.twig", "./assets/scripts/**/*.vue"],
+  content: ["./templates/**/*.html.twig", "./assets/vue/**/*.vue"],
   theme: {
     colors: {
       transparent: 'transparent',
