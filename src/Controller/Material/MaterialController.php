@@ -33,7 +33,7 @@ class MaterialController extends AbstractController
 
         $data = [];
         foreach ($materials as $material) {
-            $data[$material->getId()] = [
+            $data[] = [
                 'name' => $material->getName(),
                 'route' => $this->generateUrl('material_view', ['id' => $material->getId()]),
             ];
