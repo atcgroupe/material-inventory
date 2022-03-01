@@ -1,0 +1,27 @@
+{% extends 'core/core.html.twig' %}
+
+{% block main %}
+    <h1 class="text-3xl text-center">
+        {{ material.name }}
+    </h1>
+
+    <h2 class="text-center text-2xl mb-5 text-gray-600">
+        {% if materialFormat is defined %}Modifier{% else %}Ajouter{% endif %} un format
+    </h2>
+
+    {{ form_start(form, { attr: { 'novalidate': 'novalidate', 'class': 'max-w-screen-sm mx-auto' } }) }}
+
+        {{ form_widget(form) }}
+
+        <div class="grid gap-4 grid-cols-2 mt-10">
+            {{ include('component/button/button.html.twig', { label: 'Enregistrer' }) }}
+
+            {{ include('component/button/a_button.html.twig', {
+                href: path('material_view', { id: material.id }),
+                label: 'Annuler',
+                width: 'full'
+            }) }}
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}
