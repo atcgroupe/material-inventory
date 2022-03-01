@@ -43,6 +43,12 @@ class Material
         $this->pieces = new ArrayCollection();
         $this->formats = new ArrayCollection();
 
+        $this->setDefaults();
+    }
+
+    public function setDefaults()
+    {
+        $this->isActive = true;
     }
 
     public function getId(): ?int
