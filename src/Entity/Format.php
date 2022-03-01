@@ -47,7 +47,7 @@ class Format
         return $this->width;
     }
 
-    public function setWidth(int $width): self
+    public function setWidth(?int $width): self
     {
         $this->width = $width;
 
@@ -59,7 +59,7 @@ class Format
         return $this->height;
     }
 
-    public function setHeight(int $height): self
+    public function setHeight(?int $height): self
     {
         $this->height = $height;
 
