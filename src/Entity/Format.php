@@ -100,4 +100,9 @@ class Format
 
         return $this;
     }
+
+    public function getDisplayName(): string
+    {
+        return sprintf('%s X %s mm', $this->getWidth(), $this->getHeight());
+    }
 }
