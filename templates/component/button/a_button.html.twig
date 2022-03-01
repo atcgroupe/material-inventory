@@ -1,0 +1,79 @@
+{# Default options #}
+{% set padding = 'py-2 px-3' %}
+{% set fontSize = 'text-base' %}
+{% set hoverTextStyle = 'hover:text-gray-600' %}
+{% set hoverBorderStyle = '' %}
+{% set hoverRingStyle = 'hover:ring-4 ring-gray-200' %}
+{% set icon = false %}
+{% set width = 'inline-flex' %}
+{% set rounded = 'rounded' %}
+
+{# Options #}
+{% if option is defined %}
+    {# size: small|medium #}
+    {% if option.size is defined %}
+        {% if option.size == 'small' %}
+            {% set padding = 'text-sm py-1 px-2' %}
+            {% set fontSize = 'text-sm' %}
+        {% elseif option.size == 'medium' %}
+            {% set padding = 'py-1 px-3' %}
+        {% endif %}
+    {% endif %}
+
+    {# type: info|danger #}
+    {% if option.type is defined %}
+        {% if option.type == 'info' %}
+            {% set hoverTextStyle = 'hover:text-cyan-400' %}
+            {% set hoverBorderStyle = 'hover:border-cyan-400' %}
+            {% set hoverRingStyle = 'hover:ring-4 ring-cyan-200' %}
+        {% elseif option.type == 'danger' %}
+            {% set hoverTextStyle = 'hover:text-red-500' %}
+            {% set hoverBorderStyle = 'hover:border-red-500' %}
+            {% set hoverRingStyle = 'hover:ring-4 ring-red-200' %}
+        {% endif %}
+    {% endif %}
+
+    {# icon: string(FontAwsome icon) #}
+    {% if option.icon is defined %}
+        {% set icon = option.icon %}
+    {% endif %}
+
+    {# width: full|fit #}
+    {% if option.width is defined %}
+        {% if option.width == 'full' %}
+            {% set width = 'flex' %}
+        {% elseif option.width == 'fit' %}
+            {% set width = 'inline-flex' %}
+        {% endif %}
+    {% endif %}
+
+    {# rounded #}
+    {% if option.rounded is defined and option.rounded == true %}
+        {% set rounded = 'rounded-full' %}
+    {% endif %}
+{% endif %}
+
+{# Template #}
+<a
+    href="{{ href }}"
+    class="
+        {% if label is defined %}
+            items-center justify-center
+            border border-gray-500 text-gray-500 font-normal
+            {{ padding }} {{ hoverBorderStyle }} {{ hoverRingStyle }} {{ rounded }}
+        {% else %}
+            text-gray-400
+        {% endif %}
+        transition ease-in-out duration-100
+        bg-white
+        {{ width }} {{ hoverTextStyle }} {{ fontSize }}
+        {% if class is defined %}{{ class }}{% endif %}
+    "
+    {% if id is defined %}{{ id }}{% endif %}
+>
+    {% if icon %}
+        <i class="block fas fa-{{ icon }} mr-2 {% if option.iconClass is defined %}{{ iconClass }}{% endif %}"></i>
+    {% endif %}
+
+    {% if label is defined %}{{ label }}{% endif %}
+</a>
