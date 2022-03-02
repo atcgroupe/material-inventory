@@ -103,7 +103,11 @@ class UserRoleProvider
             ->required()
             ->allowedTypes('string');
 
-        $resolver->define('ROLE_USER')
+        $resolver->define('ROLE_STORE_KEEPER')
+            ->required()
+            ->allowedTypes('string');
+
+        $resolver->define('ROLE_GRAPHIC_DESIGNER')
             ->required()
             ->allowedTypes('string');
     }

@@ -32,8 +32,9 @@ services:
             $searchDn: '%env(resolve:LDAP_SEARCH_DN)%'
             $searchPassword: '%env(LDAP_SEARCH_PASSWORD)%'
             $roles:
-                ROLE_ADMIN: 'AtcUsersAppGroup_SystemInventory_Admin'
-                ROLE_USER: 'AtcUsersAppGroup_SystemInventory_User'
+                ROLE_ADMIN: 'AtcUsersAppGroup_MaterialInventory_Admin'
+                ROLE_STORE_KEEPER: 'AtcUsersAppGroup_MaterialInventory_StoreKeeper'
+                ROLE_GRAPHIC_DESIGNER: 'AtcUsersAppGroup_MaterialInventory_GraphicDesigner'
             $mailAttr: 'mail' # email attribute name in the LDAP
             $displayNameAttr: 'name' # display name attribute in the LDAP
             #$extraAttributes: ['telephoneNumber']
