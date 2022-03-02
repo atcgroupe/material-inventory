@@ -1,6 +1,8 @@
 security:
     role_hierarchy:
         ROLE_ADMIN: [ROLE_STORE_KEEPER, ROLE_GRAPHIC_DESIGNER]
+        ROLE_STORE_KEEPER: ROLE_MATERIAL_MANAGER
+        ROLE_GRAPHIC_DESIGNER: ROLE_MATERIAL_MANAGER
 
     enable_authenticator_manager: true
 
