@@ -19,11 +19,13 @@
         <h1 class="text-3xl text-center">Librairie des matières</h1>
 
         <p class="w-full flex justify-center lg:justify-end mt-4 lg:mt-0">
-            {{ include('component/button/a_button.html.twig', {
-                href: path('material_create'),
-                label: 'Ajouter',
-                option: { icon: 'plus', rounded: true }
-            }) }}
+            {% if is_granted('ROLE_MATERIAL_MANAGER') %}
+                {{ include('component/button/a_button.html.twig', {
+                    href: path('material_create'),
+                    label: 'Ajouter',
+                    option: { icon: 'plus', rounded: true }
+                }) }}
+            {% endif %}
         </p>
     </section>
 
