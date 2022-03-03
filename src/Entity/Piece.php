@@ -110,6 +110,12 @@ class Piece
 
         return $this;
     }
+
+    public function getDisplayName(): string
+    {
+        return sprintf('%s X %s mm', $this->getWidth(), $this->getHeight());
+    }
+
     #[Assert\IsTrue(message: 'La hauteur doit être supérieure ou égale à la largeur')]
     public function isValid(): bool
     {
