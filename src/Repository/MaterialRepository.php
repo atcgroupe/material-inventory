@@ -44,17 +44,4 @@ class MaterialRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    public function findWithRelations(int $id): ?Material
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.id = :id')
-            ->setParameter('id', $id)
-            ->addSelect('formats')
-                ->leftJoin('m.formats', 'formats')
-                ->orderBy('formats.width', 'ASC')
-                ->addOrderBy('formats.height', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }
