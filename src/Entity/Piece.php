@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\PiecePrintableFaces;
 use App\Repository\PieceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -67,6 +68,11 @@ class Piece
     public function getPrintableFaces(): ?int
     {
         return $this->printableFaces;
+    }
+
+    public function getPrintableFacesLabel(): string
+    {
+        return PiecePrintableFaces::from($this->getPrintableFaces())->getLabel();
     }
 
     public function setPrintableFaces(int $printableFaces): self
