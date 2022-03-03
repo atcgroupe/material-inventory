@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\PieceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PieceRepository::class)]
+#[UniqueEntity(['width', 'height', 'printableFaces', 'material'], message: 'Ce format de chute existe déjà!')]
 class Piece
 {
     #[ORM\Id]
@@ -14,15 +17,18 @@ class Piece
     private $id;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: 'La largeur est obligatoire')]
     private $width;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: 'La hauteur est obligatoire')]
     private $height;
 
     #[ORM\Column(type: 'smallint')]
     private $printableFaces;
 
     #[ORM\Column(type: 'smallint')]
+    #[Assert\NotBlank(message: 'La quantité est obligatoire')]
     private $quantity;
 
     #[ORM\ManyToOne(targetEntity: Material::class, inversedBy: 'pieces')]
@@ -92,5 +98,10 @@ class Piece
         $this->material = $material;
 
         return $this;
+    }
+    #[Assert\IsTrue(message: 'La hauteur doit être supérieure ou égale à la largeur')]
+    public function isValid(): bool
+    {
+        return $this->getHeight() >= $this->getWidth();
     }
 }
