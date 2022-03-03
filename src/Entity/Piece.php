@@ -36,6 +36,11 @@ class Piece
     #[ORM\JoinColumn(nullable: false)]
     private $material;
 
+    public function __construct(Material $material)
+    {
+        $this->setMaterial($material);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
