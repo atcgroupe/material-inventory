@@ -4,7 +4,9 @@ namespace App\Controller\Material;
 
 use App\Entity\Material;
 use App\Form\MaterialEditType;
+use App\Repository\FormatRepository;
 use App\Repository\MaterialRepository;
+use App\Repository\PieceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,10 +83,17 @@ class MaterialController extends AbstractController
     }
 
     #[Route('/view/{id}', name: '_view')]
-    public function view(int $id): Response
+    public function view(int $id, FormatRepository $formatRepository, PieceRepository $pieceRepository): Response
     {
+        $material = $this->materialRepository->find($id);
+
         return $this->render('material/view.html.twig', [
-            'material' => $this->materialRepository->findWithRelations($id),
+            'material' => $material,
+            'formats' => $formatRepository->findBy(['material' => $material], ['width' => 'ASC', 'height' => 'ASC']),
+            'pieces' => $pieceRepository->findBy(
+                ['material' => $material],
+                ['width' => 'ASC', 'height' => 'ASC', 'printableFaces' => 'ASC'],
+            ),
         ]);
     }
 
