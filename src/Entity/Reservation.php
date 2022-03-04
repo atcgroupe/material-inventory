@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\ReservationStatus;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -62,6 +63,11 @@ class Reservation
         return $this->creationTime;
     }
 
+    public function getCreationTimeLabel(): string
+    {
+        return $this->getCreationTime()->format('d/m/Y');
+    }
+
     public function setCreationTime(\DateTimeInterface $creationTime): self
     {
         $this->creationTime = $creationTime;
@@ -74,7 +80,12 @@ class Reservation
         return $this->deliveryDate;
     }
 
-    public function setDeliveryDate(\DateTimeInterface $deliveryDate): self
+    public function getDeliveryDateLabel(): string
+    {
+        return $this->getDeliveryDate()->format('d/m');
+    }
+
+    public function setDeliveryDate(?\DateTimeInterface $deliveryDate): self
     {
         $this->deliveryDate = $deliveryDate;
 
@@ -120,6 +131,11 @@ class Reservation
     public function getStatus(): ?int
     {
         return $this->status;
+    }
+
+    public function getStatusLabel(): string
+    {
+        return ReservationStatus::from($this->getStatus())->getLabel();
     }
 
     public function setStatus(int $status): self
