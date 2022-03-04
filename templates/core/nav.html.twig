@@ -30,9 +30,10 @@
                         label: 'Librairie'
                     }) }}
 
-                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
-
-                    {{ include('component/nav/navbar_menu_item.html.twig', { href: '#', label: 'resa' }) }}
+                    {{ include('component/nav/navbar_menu_item.html.twig', {
+                        href: path('reservation_index'),
+                        label: 'resa'
+                    }) }}
                 </div>
             </div>
 
@@ -66,9 +67,10 @@
                     label: 'Librairie'
                 }) }}
 
-                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'chutes' }) }}
-
-                {{ include('component/nav/navbar_mobile_menu_item.html.twig', { href: '#', label: 'resa' }) }}
+                {{ include('component/nav/navbar_mobile_menu_item.html.twig', {
+                    href: path('reservation_index'),
+                    label: 'resa'
+                }) }}
             </ul>
         </div>
     </div>
