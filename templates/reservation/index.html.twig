@@ -1,0 +1,37 @@
+{% extends 'core/core.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ encore_entry_link_tags('reservation') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('reservation') }}
+{% endblock %}
+
+{% block main %}
+    <section class="grid grid-cols-1 lg:grid-cols-3">
+        <div></div>
+
+        <h1 class="text-3xl text-center">Resa matières</h1>
+
+        <p class="w-full flex justify-center lg:justify-end mt-4 lg:mt-0">
+            {% if is_granted('ROLE_MATERIAL_MANAGER') %}
+                {{ include('component/button/a_button.html.twig', {
+                    href: path('reservation_create'),
+                    label: 'Nouvelle resa',
+                    option: { icon: 'plus', rounded: true }
+                }) }}
+            {% endif %}
+        </p>
+    </section>
+
+    <section
+            id="reservation-list"
+            data-route="{{ path('reservation_list') }}"
+    >
+    </section>
+{% endblock %}
