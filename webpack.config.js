@@ -23,6 +23,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('material', './assets/vue/material/material.js')
+    .addEntry('reservation', './assets/vue/reservation/reservation.js')
     .copyFiles({
         from: './assets/images',
         to: 'images/[path][name].[ext]',
