@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -33,6 +34,18 @@ class Reservation
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $statusComment;
+
+    public function __construct(UserInterface $user)
+    {
+        $this->userIdentifier = $user->getUserIdentifier();
+        $this->setDefaults();
+    }
+
+    private function setDefaults()
+    {
+        $this->setCreationTime(new \DateTime('NOW'));
+        $this->setStatus(ReservationStatus::CREATION->getValue());
+    }
 
     public function getId(): ?int
     {
