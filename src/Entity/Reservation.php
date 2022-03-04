@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -18,12 +19,16 @@ class Reservation
     private $creationTime;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\NotBlank(message: 'La date de livraison est obligatoire')]
     private $deliveryDate;
 
     #[ORM\Column(type: 'string', length: 20)]
+    #[Assert\NotBlank(message: 'Le numéro de dossier est obligatoire')]
+    #[Assert\Regex('/^[A-Z]{2}2[0-9]{3}-[0-9]{3} [A-Z]{1,3} [1-9A-Z]{2,3}$/', message: 'Format invalide')]
     private $jobId;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\NotBlank(message: 'Le client est obligatoire')]
     private $jobCustomer;
 
     #[ORM\Column(type: 'string', length: 50)]
