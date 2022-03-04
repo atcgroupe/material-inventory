@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,23 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
-    // /**
-    //  * @return Reservation[] Returns an array of Reservation objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Reservation[] Returns an array of Reservation objects
+     */
+    public function searchByName(bool $creation, string|null $search)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+        $queryBuilder = $this->createQueryBuilder('r');
+        return $queryBuilder
+            ->add('where', $queryBuilder->expr()->andX(
+                ($creation) ? $queryBuilder->expr()->neq('r.status', 1) : null,
+                $queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->like('LOWER(r.jobId)', ':search'),
+                    $queryBuilder->expr()->like('LOWER(r.jobCustomer)', ':search')
+                )
+            ))
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('r.deliveryDate', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Reservation
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
